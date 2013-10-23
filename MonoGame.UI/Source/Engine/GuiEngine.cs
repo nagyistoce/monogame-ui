@@ -88,10 +88,7 @@ namespace MonoGame.UI
                 this.ProcessKeyboardInput();
                 foreach (Window _win in this.lstWindows)
                 {
-                    if (_win.Focused == true)
-                    {
-                        _win.Update();
-                    }
+                    _win.Update();
                 }
             }
             MouseHelper.UpdateLastMousePosition(_mouseState);
@@ -105,8 +102,12 @@ namespace MonoGame.UI
             this.SpriteBatch.Begin();
             foreach (Window _win in this.lstWindows)
             {
-                _win.Draw(this.SpriteBatch);
+                if (_win != this.CurrentWindow)
+                {
+                    _win.Draw(this.SpriteBatch);
+                }
             }
+            this.CurrentWindow.Draw(this.SpriteBatch);
             this.SpriteBatch.End();
         }
 

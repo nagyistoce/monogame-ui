@@ -40,10 +40,8 @@ namespace MonoGame.UI
             this.Visible = true;
             this.Enabled = true;
             // Set rectangle
-            this.Left = 10;
-            this.Top = 10;
-            this.Width = 300;
-            this.Height = 300;
+            this.SetPosition(10, 10);
+            this.SetSize(300, 300);
             this.RebuildRectangle();
             this.lstControl = new List<Control>();
         }
@@ -56,10 +54,8 @@ namespace MonoGame.UI
             this.Visible = true;
             this.Enabled = true;
             // Set rectangle
-            this.Left = left;
-            this.Top = top;
-            this.Width = width;
-            this.Height = height;
+            this.SetPosition(left, top);
+            this.SetSize(width, height);
             this.RebuildRectangle();
             this.lstControl = new List<Control>();
         }
@@ -85,10 +81,8 @@ namespace MonoGame.UI
             this.Visible = true;
             this.Enabled = true;
             // Set rectangle
-            this.Left = left;
-            this.Top = top;
-            this.Width = width;
-            this.Height = height;
+            this.SetPosition(left, top);
+            this.SetSize(width, height);
             this.RebuildRectangle();
             this.lstControl = new List<Control>();
         }
