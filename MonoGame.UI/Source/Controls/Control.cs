@@ -103,6 +103,42 @@ namespace MonoGame.UI
         }
 
         /// <summary>
+        /// Get the control position as Vector2
+        /// </summary>
+        public Vector2 Position
+        {
+            get
+            {
+                if (this.Parent == null)
+                {
+                    return new Vector2(this.Left, this.Top);
+                }
+                else
+                {
+                    return new Vector2(this.Left + this.Parent.Left, this.Top + this.Parent.Top + 25);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the real position of the control in the app
+        /// </summary>
+        public Vector2 RealPosition
+        {
+            get
+            {
+                if (this.Parent == null)
+                {
+                    return new Vector2(this.Rectangle.X, this.Rectangle.Y);
+                }
+                else
+                {
+                    return new Vector2(this.Left + this.Parent.Rectangle.X, this.Top + this.Parent.Rectangle.Y + 25);
+                }
+            }
+        }
+
+        /// <summary>
         /// Get or set a value indicating whether the control can respond to user interaction.
         /// </summary>
         public Boolean Enabled
@@ -150,7 +186,7 @@ namespace MonoGame.UI
         {
             get
             {
-                return this.Parent;
+                return this.parent;
             }
         }
 
@@ -174,6 +210,11 @@ namespace MonoGame.UI
         #region CONSTRUCTORS & DESTRUCTORS
 
         public Control() { }
+
+        public Control(Window parent)
+        {
+            this.parent = parent;
+        }
 
         ~Control()
         {
@@ -218,8 +259,16 @@ namespace MonoGame.UI
         /// <param name="top">Top distance</param>
         public void SetPosition(Int32 left, Int32 top) 
         {
-            this.Left = left;
-            this.Top = top;
+            if (this.Parent == null)
+            {
+                this.Left = left;
+                this.Top = top;
+            }
+            else
+            {
+                this.Left = this.Parent.Left + left;
+                this.Top = this.Parent.Top + 25 + top;
+            }
         }
 
         /// <summary>
