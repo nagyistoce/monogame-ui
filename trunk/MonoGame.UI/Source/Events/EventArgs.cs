@@ -32,7 +32,7 @@ namespace MonoGame.UI
     /// </summary>
     public class MonoGameMouseEventArgs : EventArgs
     {
-        private MouseState MouseState;
+        protected MouseState MouseState;
 
         /// <summary>
         /// Get the LeftButton state

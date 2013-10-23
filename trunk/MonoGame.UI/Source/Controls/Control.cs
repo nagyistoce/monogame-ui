@@ -28,9 +28,6 @@ namespace MonoGame.UI
         private Boolean disposed;
         private Boolean focused;
 
-        private Position position;
-        private Size size;
-
         private Window parent;
 
         public Rectangle Rectangle;
@@ -74,22 +71,8 @@ namespace MonoGame.UI
         /// </summary>
         public Int32 Left
         {
-            get
-            {
-                if (this.position == null)
-                {
-                    return 0;
-                }
-                return this.position.Left;
-            }
-            set
-            {
-                if (this.position == null)
-                {
-                    this.position = new Position();
-                }
-                this.position.Left = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -97,22 +80,8 @@ namespace MonoGame.UI
         /// </summary>
         public Int32 Top
         {
-            get
-            {
-                if (this.position == null)
-                {
-                    return 0;
-                }
-                return this.position.Left;
-            }
-            set
-            {
-                if (this.position == null)
-                {
-                    this.position = new Position();
-                }
-                this.position.Left = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -120,22 +89,8 @@ namespace MonoGame.UI
         /// </summary>
         public Int32 Width
         {
-            get
-            {
-                if (this.size == null)
-                {
-                    return 0;
-                }
-                return this.size.Width;
-            }
-            set
-            {
-                if (this.size == null)
-                {
-                    this.size = new Size();
-                }
-                this.size.Width = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -143,22 +98,8 @@ namespace MonoGame.UI
         /// </summary>
         public Int32 Height
         {
-            get
-            {
-                if (this.size == null)
-                {
-                    return 0;
-                }
-                return this.size.Height;
-            }
-            set
-            {
-                if (this.size == null)
-                {
-                    this.size = new Size();
-                }
-                this.size.Height = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -275,14 +216,22 @@ namespace MonoGame.UI
         /// </summary>
         /// <param name="left">Left distance</param>
         /// <param name="top">Top distance</param>
-        public void SetPosition(Int32 left, Int32 top) { }
+        public void SetPosition(Int32 left, Int32 top) 
+        {
+            this.Left = left;
+            this.Top = top;
+        }
 
         /// <summary>
         /// Set the control size
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public void SetSize(Int32 width, Int32 height) { }
+        public void SetSize(Int32 width, Int32 height) 
+        {
+            this.Width = width;
+            this.Height = height;
+        }
 
         //public void PointToClient() { }
 
