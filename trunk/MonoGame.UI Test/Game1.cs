@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using MonoGame.UI;
+using System.Windows.Forms;
 #endregion
 
 namespace MonoGame.UI_Test
@@ -22,6 +23,7 @@ namespace MonoGame.UI_Test
 
         GuiEngine Engine;
         Window win;
+        Window win2;
 
         public Game1()
             : base()
@@ -42,7 +44,10 @@ namespace MonoGame.UI_Test
 
             this.win = new Window(this.Engine);
 
+            this.win2 = new Window(this.Engine, 350, 10, 300, 300, "Hello world!");
+
             this.Engine.AddWindow(this.win);
+            this.Engine.AddWindow(this.win2);
 
             base.Initialize();
         }
@@ -75,8 +80,6 @@ namespace MonoGame.UI_Test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
             this.Engine.Update(gameTime);
 
