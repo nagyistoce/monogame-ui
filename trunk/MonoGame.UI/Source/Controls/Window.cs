@@ -22,7 +22,7 @@ namespace MonoGame.UI
         #region FIELDS
 
         public List<Control> lstControl;
-        private GuiEngine Engine;
+        public GuiEngine Engine;
 
         #endregion
 
@@ -180,6 +180,40 @@ namespace MonoGame.UI
                 }
             }
             base.Draw(spriteBatch);
+        }
+
+        /// <summary>
+        /// Add the control to the window control list
+        /// </summary>
+        /// <param name="control">Control to add</param>
+        public void AddControl(Control control)
+        {
+            if (control is Window)
+            {
+                return;
+            }
+            if (this.lstControl.Contains(control) == false)
+            {
+                this.lstControl.Add(control);
+            }
+        }
+
+        /// <summary>
+        /// Delete the control from the window control list and dispose it
+        /// </summary>
+        /// <param name="control">Control to delete</param>
+        public void DeleteControl(Control control)
+        {
+            if (control is Window)
+            {
+                return;
+            }
+            if (this.lstControl.Contains(control) == true)
+            {
+                this.lstControl.Remove(control);
+            }
+            control.Dispose();
+            control = null;
         }
 
         #endregion

@@ -25,6 +25,8 @@ namespace MonoGame.UI_Test
         Window win;
         Window win2;
 
+        MonoGame.UI.Label label1;
+
         public Game1()
             : base()
         {
@@ -43,6 +45,9 @@ namespace MonoGame.UI_Test
             this.Engine = new GuiEngine(this.Content, this.GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
             this.win = new Window(this.Engine);
+            this.label1 = new UI.Label(this.win);
+            this.label1.Text = "Hello world!";
+            this.label1.SetPosition(42, 42);
 
             this.win2 = new Window(this.Engine, 350, 10, 300, 300, "Hello world!");
 
