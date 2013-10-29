@@ -23,6 +23,7 @@ namespace MonoGame.UI
 
         public SpriteFont Font;
         public Texture2D[] WndTiles;
+        public Texture2D Buttons;
 
         #endregion
 
@@ -55,6 +56,10 @@ namespace MonoGame.UI
             {
                 this.WndTiles[i] = this.Content.Load<Texture2D>(@"Theme/WndTile" + i.ToString());
             }
+
+            /* Load Button */
+            this.Buttons = this.Content.Load<Texture2D>(@"Theme/WndButton");
+
         }
 
         /// <summary>
@@ -62,10 +67,12 @@ namespace MonoGame.UI
         /// </summary>
         public void Dispose()
         {
+            this.Font = null;
             foreach (Texture2D _texture in this.WndTiles)
             {
                 _texture.Dispose();
             }
+            this.Buttons.Dispose();
         }
 
         #endregion

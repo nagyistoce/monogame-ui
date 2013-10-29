@@ -39,10 +39,9 @@ namespace MonoGame.UI
             this.Text = "MonoGame.UI Window";
             this.Visible = true;
             this.Enabled = true;
-            // Set rectangle
+            // Set position ans size
             this.SetPosition(10, 10);
             this.SetSize(300, 300);
-            this.RebuildRectangle();
             this.lstControl = new List<Control>();
         }
 
@@ -53,23 +52,9 @@ namespace MonoGame.UI
             this.Text = "MonoGame.UI Window";
             this.Visible = true;
             this.Enabled = true;
-            // Set rectangle
+            // Set position ans size
             this.SetPosition(left, top);
             this.SetSize(width, height);
-            this.RebuildRectangle();
-            this.lstControl = new List<Control>();
-        }
-
-        public Window(GuiEngine engine, Rectangle rectangle)
-            : base()
-        {
-            this.Engine = engine;
-            this.Text = "MonoGame.UI Window";
-            this.Visible = true;
-            this.Enabled = true;
-            // Set rectangle
-            this.Rectangle = rectangle;
-            this.RebuildPositionAndSize();
             this.lstControl = new List<Control>();
         }
 
@@ -80,30 +65,19 @@ namespace MonoGame.UI
             this.Text = title;
             this.Visible = true;
             this.Enabled = true;
-            // Set rectangle
+            // Set position ans size
             this.SetPosition(left, top);
             this.SetSize(width, height);
-            this.RebuildRectangle();
-            this.lstControl = new List<Control>();
-        }
-
-        public Window(GuiEngine engine, Rectangle rectangle, String title)
-            : base()
-        {
-            this.Engine = engine;
-            this.Text = title;
-            this.Visible = true;
-            this.Enabled = true;
-            // Set rectangle
-            this.Rectangle = rectangle;
-            this.RebuildPositionAndSize();
             this.lstControl = new List<Control>();
         }
 
         #endregion
 
         #region METHODS
-
+        
+        /// <summary>
+        /// Update the window
+        /// </summary>
         public override void Update()
         {
             if (this.Enabled == true && this.Visible == true)
@@ -131,16 +105,24 @@ namespace MonoGame.UI
                             this.Engine.CurrentWindow = this;
                         }
                         if (Mouse.GetState().X >= this.Rectangle.X && Mouse.GetState().X <= this.Rectangle.X + this.Rectangle.Width &&
-                            Mouse.GetState().Y >= this.Rectangle.Y && Mouse.GetState().Y <= this.Rectangle.Y + 24)
+                            Mouse.GetState().Y >= this.Rectangle.Y && Mouse.GetState().Y <= this.Rectangle.Y + 16)
                         {
                             this.Engine.CurrentWindowMoving = this;
                         }
                     }
                 }
+                foreach (Control _control in this.lstControl)
+                {
+                    _control.Update();
+                }
             }
             base.Update();
         }
 
+        /// <summary>
+        /// Draw the window
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             Color _winColor;
@@ -154,19 +136,20 @@ namespace MonoGame.UI
                 {
                     _winColor = Color.White * 0.8f;
                 }
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[0], new Rectangle(this.Rectangle.X, this.Rectangle.Y, 16, 16), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[1], new Rectangle(this.Rectangle.X + 16, this.Rectangle.Y, this.Rectangle.Width - 32, 16), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[2], new Rectangle(this.Rectangle.Right - 16, this.Rectangle.Y, 16, 16), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[3], new Rectangle(this.Rectangle.X, this.Rectangle.Y + 16, 16, 16), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[4], new Rectangle(this.Rectangle.X + 16, this.Rectangle.Y + 16, this.Rectangle.Width - 32, 16), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[5], new Rectangle(this.Rectangle.Right - 16, this.Rectangle.Y + 16, 16, 16), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[6], new Rectangle(this.Rectangle.X, this.Rectangle.Y + 32, 16, this.Rectangle.Height - 48), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[7], new Rectangle(this.Rectangle.X + 16, this.Rectangle.Y + 32, this.Rectangle.Width - 32, this.Rectangle.Height - 48), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[8], new Rectangle(this.Rectangle.Right - 16, this.Rectangle.Y + 32, 16, this.Rectangle.Height - 48), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[9], new Rectangle(this.Rectangle.X, this.Rectangle.Bottom - 16, 16, 16), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[10], new Rectangle(this.Rectangle.X + 16, this.Rectangle.Bottom - 16, this.Rectangle.Width - 32, 16), _winColor);
-                spriteBatch.Draw(this.Engine.Loader.WndTiles[11], new Rectangle(this.Rectangle.Right - 16, this.Rectangle.Bottom - 16, 16, 16), _winColor);
-
+                // Window draw logic
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[0], new Rectangle(Rectangle.X, Rectangle.Y, 16, 16), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[1], new Rectangle(Rectangle.X + 16, Rectangle.Y, Rectangle.Width - 32, 16), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[2], new Rectangle(Rectangle.Right - 16, Rectangle.Y, 16, 16), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[3], new Rectangle(Rectangle.X, Rectangle.Y + 16, 16, 16), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[4], new Rectangle(Rectangle.X + 16, Rectangle.Y + 16, Rectangle.Width - 32, 16), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[5], new Rectangle(Rectangle.Right - 16, Rectangle.Y + 16, 16, 16), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[6], new Rectangle(Rectangle.X, Rectangle.Y + 32, 16, Rectangle.Height - 48), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[7], new Rectangle(Rectangle.X + 16, Rectangle.Y + 32, Rectangle.Width - 32, Rectangle.Height - 48), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[8], new Rectangle(Rectangle.Right - 16, Rectangle.Y + 32, 16, Rectangle.Height - 48), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[9], new Rectangle(Rectangle.X, Rectangle.Bottom - 16, 16, 16), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[10], new Rectangle(Rectangle.X + 16, Rectangle.Bottom - 16, Rectangle.Width - 32, 16), _winColor);
+                spriteBatch.Draw(this.Engine.Loader.WndTiles[11], new Rectangle(Rectangle.Right - 16, Rectangle.Bottom - 16, 16, 16), _winColor);
+                
                 if (this.Text != null)
                 {
                     spriteBatch.DrawString(this.Engine.Font, this.Text,
