@@ -181,31 +181,35 @@ namespace MonoGame.UI
             this.GraphicsDevice.Dispose();
         }
 
+        /// <summary>
+        /// Process the mouse Input for the moving window
+        /// </summary>
+        /// <param name="mouseState"></param>
         private void ProcessMouseInput(MouseState mouseState)
         {
             if (this.CurrentWindowMoving != null)
             {
                 if (MouseHelper.mouseDown && this.CurrentWindowMoving.Enabled)
                 {
-                    this.CurrentWindowMoving.Rectangle.X -= MouseHelper.lastMouseState.X - mouseState.X;
-                    this.CurrentWindowMoving.Rectangle.Y -= MouseHelper.lastMouseState.Y - mouseState.Y;
+                    this.CurrentWindowMoving.Left -= MouseHelper.lastMouseState.X - mouseState.X;
+                    this.CurrentWindowMoving.Top -= MouseHelper.lastMouseState.Y - mouseState.Y;
 
                     if (this.CurrentWindowMoving.Rectangle.X < 0)
                     {
-                        this.CurrentWindowMoving.Rectangle.X = 0;
+                        this.CurrentWindowMoving.Left = 0;
                     }
                     else if (this.CurrentWindowMoving.Rectangle.X + this.CurrentWindowMoving.Rectangle.Width > this.ClientWidth)
                     {
-                        this.CurrentWindowMoving.Rectangle.X = this.ClientWidth - this.CurrentWindowMoving.Rectangle.Width;
+                        this.CurrentWindowMoving.Left = this.ClientWidth - this.CurrentWindowMoving.Rectangle.Width;
                     }
 
                     if (this.CurrentWindowMoving.Rectangle.Y < 0)
                     {
-                        this.CurrentWindowMoving.Rectangle.Y = 0;
+                        this.CurrentWindowMoving.Top = 0;
                     }
                     else if (this.CurrentWindowMoving.Rectangle.Y + this.CurrentWindowMoving.Rectangle.Height > this.ClientHeight)
                     {
-                        this.CurrentWindowMoving.Rectangle.Y = this.ClientHeight - this.CurrentWindowMoving.Rectangle.Height;
+                        this.CurrentWindowMoving.Top = this.ClientHeight - this.CurrentWindowMoving.Rectangle.Height;
                     }
                 }
                 else

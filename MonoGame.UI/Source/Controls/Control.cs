@@ -27,10 +27,10 @@ namespace MonoGame.UI
         private Boolean visible;
         private Boolean disposed;
         private Boolean focused;
+        private Boolean hover;
+        private Boolean pressed;
 
         private Window parent;
-
-        public Rectangle Rectangle;
 
         #endregion
 
@@ -205,6 +205,47 @@ namespace MonoGame.UI
             }
         }
 
+        /// <summary>
+        /// Get or set the control hover
+        /// </summary>
+        public Boolean Hover
+        {
+            get
+            {
+                return this.hover;
+            }
+            set
+            {
+                this.hover = value;
+            }
+        }
+
+        /// <summary>
+        /// Get or set the control pressed
+        /// </summary>
+        public Boolean Pressed
+        {
+            get
+            {
+                return this.pressed;
+            }
+            set
+            {
+                this.pressed = value;
+            }
+        }
+
+        /// <summary>
+        /// Get the rectangle control
+        /// </summary>
+        public Rectangle Rectangle
+        {
+            get
+            {
+                return new Rectangle(this.Left, this.Top, this.Width, this.Height);
+            }
+        }
+
         #endregion
 
         #region CONSTRUCTORS & DESTRUCTORS
@@ -213,6 +254,8 @@ namespace MonoGame.UI
 
         public Control(Window parent)
         {
+            this.enabled = true;
+            this.visible = true;
             this.parent = parent;
         }
 
@@ -289,25 +332,6 @@ namespace MonoGame.UI
         //public void RectangleToScreen() { }
 
         //public void RectangleToClient() { }
-
-        /// <summary>
-        /// Rebuild the rectangle of the control
-        /// </summary>
-        protected void RebuildRectangle()
-        {
-            this.Rectangle = new Rectangle(this.Left, this.Top, this.Width, this.Height);
-        }
-
-        /// <summary>
-        /// Rebuild the position and size of the control
-        /// </summary>
-        protected void RebuildPositionAndSize()
-        {
-            this.Left = this.Rectangle.X;
-            this.Top = this.Rectangle.Y;
-            this.Width = this.Rectangle.Width;
-            this.Height = this.Rectangle.Height;
-        }
 
         #endregion
 
