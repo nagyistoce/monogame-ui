@@ -105,7 +105,7 @@ namespace MonoGame.UI
                             this.Engine.CurrentWindow = this;
                         }
                         if (Mouse.GetState().X >= this.Rectangle.X && Mouse.GetState().X <= this.Rectangle.X + this.Rectangle.Width &&
-                            Mouse.GetState().Y >= this.Rectangle.Y && Mouse.GetState().Y <= this.Rectangle.Y + 16)
+                            Mouse.GetState().Y >= this.Rectangle.Y && Mouse.GetState().Y <= this.Rectangle.Y + 25)
                         {
                             this.Engine.CurrentWindowMoving = this;
                         }

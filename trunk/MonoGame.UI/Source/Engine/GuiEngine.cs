@@ -22,7 +22,7 @@ namespace MonoGame.UI
     {
         #region FIELDS
 
-        private GraphicsDevice GraphicsDevice;
+        public GraphicsDevice GraphicsDevice;
         private ContentManager Content;
         private SpriteBatch SpriteBatch;
 
