@@ -25,6 +25,9 @@ namespace MonoGame.UI_Test
         Window win;
         Window win2;
 
+        MonoGame.UI.Button button1;
+        MonoGame.UI.Label label1;
+
         public Game1()
             : base()
         {
@@ -43,6 +46,9 @@ namespace MonoGame.UI_Test
             this.Engine = new GuiEngine(this.Content, this.GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
             this.win = new Window(this.Engine);
+
+            this.button1 = new UI.Button(this.win, 30, 200, 200, 24, "Leave Program");
+            this.label1 = new UI.Label(this.win, 55, 10, "Welcome to MonoGame.UI");
 
             this.win2 = new Window(this.Engine, 350, 10, 300, 300, "Hello world!");
 

@@ -133,7 +133,7 @@ namespace MonoGame.UI
                 }
                 else
                 {
-                    return new Vector2(this.Left + this.Parent.Rectangle.X, this.Top + this.Parent.Rectangle.Y + 25);
+                    return new Vector2(this.Left + this.Parent.Rectangle.X, this.Top + this.Parent.Rectangle.Y);
                 }
             }
         }
@@ -242,7 +242,14 @@ namespace MonoGame.UI
         {
             get
             {
-                return new Rectangle(this.Left, this.Top, this.Width, this.Height);
+                if (this.Parent == null)
+                {
+                    return new Rectangle(this.Left, this.Top, this.Width, this.Height);
+                }
+                else
+                {
+                    return new Rectangle(this.Left + this.Parent.Left, this.Top + this.Parent.Top, this.Width, this.Height);
+                }
             }
         }
 
@@ -271,7 +278,7 @@ namespace MonoGame.UI
         /// <summary>
         /// Releases all resources
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
@@ -310,7 +317,7 @@ namespace MonoGame.UI
             else
             {
                 this.Left = this.Parent.Left + left;
-                this.Top = this.Parent.Top + 25 + top;
+                this.Top = this.Parent.Top + top + 15;
             }
         }
 

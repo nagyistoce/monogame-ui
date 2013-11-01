@@ -29,7 +29,7 @@ namespace MonoGame.UI
         {
             this.Text = "Button";
             this.SetPosition(0, 0);
-            this.SetPosition(75, 25);
+            this.SetSize(140, 24);
             this.Parent.AddControl(this);
         }
 
@@ -62,35 +62,24 @@ namespace MonoGame.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             Color _color = Color.White;
-            Texture2D _button_texture = this.GetCurrentButtonTexture();
+            Texture2D _buttonTexture = this.Parent.Engine.Loader.Buttons;
+            Rectangle _buttonSource = this.GetButtonRectangle();
 
             if (this.Parent != this.Parent.Engine.CurrentWindow)
             {
                 _color *= 0.8f;
             }
 
-            // Draw logic
-            #region Top
+            // Draw button
+            spriteBatch.Draw(_buttonTexture, this.Rectangle, _buttonSource, _color);
 
-            spriteBatch.Draw(_button_texture,
-                new Vector2(this.RealPosition.X, this.RealPosition.Y),
-                new Rectangle(0, 0, 7, 7),
-                _color);
+            if (String.IsNullOrEmpty(this.Text) == false)
+            {
+                Vector2 _text_len = this.Parent.Engine.Font.MeasureString(this.Text);
+                Vector2 _position = new Vector2(this.RealPosition.X + this.Width / 2 - _text_len.X / 2, this.RealPosition.Y + this.Height / 2 - _text_len.Y / 2);
+                spriteBatch.DrawString(this.Parent.Engine.Font, this.Text, new Vector2(_position.X, _position.Y), Color.Black);
+            }
 
-            spriteBatch.Draw(_button_texture,
-                new Vector2(this.RealPosition.X + 7, this.RealPosition.Y),
-                new Rectangle(7, 0, this.Width - 14, 7),
-                _color);
-
-            #endregion
-
-            #region Middle
-
-            #endregion
-
-            #region Bottom
-
-            #endregion
             base.Draw(spriteBatch);
         }
 
@@ -124,27 +113,37 @@ namespace MonoGame.UI
         }
 
         /// <summary>
-        /// Get the current button texture
+        /// Get the current rectangle of the button
         /// </summary>
         /// <returns></returns>
-        private Texture2D GetCurrentButtonTexture()
+        private Rectangle GetButtonRectangle()
         {
+            Int32 _buttonWidth = this.Parent.Engine.Loader.Buttons.Width / 4;
+            Int32 _buttonHeight = this.Parent.Engine.Loader.Buttons.Height;
             if (this.Enabled == false)
             {
-                return this.Parent.Engine.Loader.Buttons[3];
+                return new Rectangle(_buttonWidth * 3, 0, _buttonWidth, _buttonHeight);
             }
             else if (this.Pressed == true)
             {
-                return this.Parent.Engine.Loader.Buttons[2];
+                return new Rectangle(_buttonWidth * 2, 0, _buttonWidth, _buttonHeight);
             }
             else if (this.Hover == true)
             {
-                return this.Parent.Engine.Loader.Buttons[1];
+                return new Rectangle(0, 0, _buttonWidth, _buttonHeight);
             }
             else
             {
-                return this.Parent.Engine.Loader.Buttons[0];
+                return new Rectangle(_buttonWidth, 0, _buttonWidth, _buttonHeight);
             }
+        }
+
+        /// <summary>
+        /// Dispose Button resources
+        /// </summary>
+        public override void Dispose()
+        {
+            base.Dispose();
         }
 
         #endregion
