@@ -91,7 +91,8 @@ namespace MonoGame.UI
             if (this.Enabled == true && this.Visible == true)
             {
                 if (MouseHelper.IsMouseInRectangle(Mouse.GetState(), this.Rectangle) == true &&
-                    MouseHelper.IsMouseInRectangle(Mouse.GetState(), this.Parent.Engine.CurrentWindow.Rectangle) == true)
+                    MouseHelper.IsMouseInRectangle(Mouse.GetState(), this.Parent.Engine.CurrentWindow.Rectangle) == true &&
+                    this.Parent == this.Parent.Engine.CurrentWindow)
                 {
                     this.Hover = true;
                     this.Pressed = false;
@@ -101,6 +102,15 @@ namespace MonoGame.UI
                     {
                         this.Pressed = true;
                         this.MouseDown();
+                    }
+                    if (MouseHelper.IsMouseClick(Mouse.GetState(), MouseHelper.MouseButtons.Left) == true)
+                    {
+                        this.MouseClick();
+                        return;
+                    }
+                    if (MouseHelper.IsMouseReleased(Mouse.GetState(), MouseHelper.MouseButtons.Left) == true)
+                    {
+                        this.MouseUp();
                     }
                 }
                 else
