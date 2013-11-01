@@ -25,6 +25,7 @@ namespace MonoGame.UI
         public GraphicsDevice GraphicsDevice;
         private ContentManager Content;
         private SpriteBatch SpriteBatch;
+        private Boolean DisposeEngine;
 
         public Int32 ClientWidth;
         public Int32 ClientHeight;
@@ -56,6 +57,7 @@ namespace MonoGame.UI
             this.Content = content;
             this.GraphicsDevice = graphics;
             this.SpriteBatch = new SpriteBatch(this.GraphicsDevice);
+            this.DisposeEngine = false;
             this.ClientWidth = clientWidth;
             this.ClientHeight = clientHeight;
             
@@ -84,12 +86,16 @@ namespace MonoGame.UI
             MouseHelper.UpdateMouse(_mouseState);
             if (MouseHelper.IsMouseInRectangle(_mouseState, new Rectangle(0, 0, this.ClientWidth, this.ClientHeight)) == true)
             {
-                this.ProcessMouseInput(_mouseState);
-                this.ProcessKeyboardInput();
-                foreach (Window _win in this.lstWindows)
-                {
-                    _win.Update();
-                }
+                    this.ProcessMouseInput(_mouseState);
+                    this.ProcessKeyboardInput();
+                    foreach (Window _win in this.lstWindows)
+                    {
+                        _win.Update();
+                        if (_win.Disposed == true)
+                        {
+                            return;
+                        }
+                    }
             }
             MouseHelper.UpdateLastMousePosition(_mouseState);
         }
@@ -107,7 +113,10 @@ namespace MonoGame.UI
                     _win.Draw(this.SpriteBatch);
                 }
             }
-            this.CurrentWindow.Draw(this.SpriteBatch);
+            if (this.CurrentWindow != null)
+            {
+                this.CurrentWindow.Draw(this.SpriteBatch);
+            }
             this.SpriteBatch.End();
         }
 
@@ -162,23 +171,15 @@ namespace MonoGame.UI
         /// </summary>
         public void Dispose()
         {
-            if (this.CurrentControl != null)
-            {
-                this.CurrentControl.Dispose();
-            }
-            if (this.CurrentWindow != null)
-            {
-                this.CurrentWindow.Dispose();
-            }
             foreach (Window _window in this.lstWindows)
             {
                 _window.Dispose();
             }
             this.lstWindows.Clear();
+            this.CurrentWindow = null;
             this.Loader.Dispose();
             this.Loader = null;
-            this.Content.Dispose();
-            this.GraphicsDevice.Dispose();
+            this.DisposeEngine = true;
         }
 
         /// <summary>

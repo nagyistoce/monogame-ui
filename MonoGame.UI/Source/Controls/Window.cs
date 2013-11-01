@@ -114,6 +114,10 @@ namespace MonoGame.UI
                 foreach (Control _control in this.lstControl)
                 {
                     _control.Update();
+                    if (this.Disposed == true)
+                    {
+                        return;
+                    }
                 }
             }
             base.Update();
@@ -197,6 +201,20 @@ namespace MonoGame.UI
             }
             control.Dispose();
             control = null;
+        }
+
+        /// <summary>
+        /// Dispose the window controls
+        /// </summary>
+        public override void Dispose()
+        {
+            foreach (Control _control in this.lstControl)
+            {
+                _control.Dispose();
+            }
+            this.lstControl.Clear();
+            this.lstControl = null;
+            base.Dispose();
         }
 
         #endregion

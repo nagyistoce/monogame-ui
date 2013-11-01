@@ -115,7 +115,7 @@ namespace MonoGame.UI
                 }
                 else
                 {
-                    return new Vector2(this.Left + this.Parent.Left, this.Top + this.Parent.Top + 25);
+                    return new Vector2(this.Left + this.Parent.Left, this.Top + this.Parent.Top);
                 }
             }
         }
@@ -316,8 +316,8 @@ namespace MonoGame.UI
             }
             else
             {
-                this.Left = this.Parent.Left + left;
-                this.Top = this.Parent.Top + top + 15;
+                this.Left = left + 10;
+                this.Top = top + 20;
             }
         }
 
