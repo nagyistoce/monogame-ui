@@ -160,8 +160,15 @@ namespace MonoGame.UI
                 {
                     window.Dispose();
                     window = null;
-                    this.CurrentWindow = this.lstWindows.Last();
-                    this.CurrentWindow.Focused = true;
+                    if (this.lstWindows.Count >= 1)
+                    {
+                        this.CurrentWindow = this.lstWindows.Last();
+                        this.CurrentWindow.Focused = true;
+                    }
+                    else
+                    {
+                        this.CurrentWindow = null;
+                    }
                 }
             }
         }
