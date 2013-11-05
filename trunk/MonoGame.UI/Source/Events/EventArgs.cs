@@ -19,11 +19,24 @@ namespace MonoGame.UI
     /// </summary>
     public class MonoGameEventArgs : EventArgs
     {
-        public Control Control;
+        public Object EventObject;
 
-        public MonoGameEventArgs(Control control) 
+        public MonoGameEventArgs(Object obj) 
         {
-            this.Control = control;
+            this.EventObject = obj;
+        }
+    }
+
+    /// <summary>
+    /// MonoGame CheckBox Event Args
+    /// </summary>
+    public class MonoGameCheckBoxEventArgs : EventArgs
+    {
+        public Boolean State { get; set; }
+
+        public MonoGameCheckBoxEventArgs(Boolean state)
+        {
+            this.State = state;
         }
     }
 

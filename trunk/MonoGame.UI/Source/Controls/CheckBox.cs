@@ -30,6 +30,11 @@ namespace MonoGame.UI
         /// </summary>
         public Boolean CheckOnText { get; set; }
 
+        /// <summary>
+        /// Check change event
+        /// </summary>
+        public event MonoGameCheckBoxEventHandler OnCheckChange;
+
         #endregion
 
         #region CONSTRUCTORS
@@ -235,6 +240,7 @@ namespace MonoGame.UI
                 {
                     this.Checked = true;
                 }
+                this.OnCheck();
             }
             else
             {
@@ -249,7 +255,23 @@ namespace MonoGame.UI
                     {
                         this.Checked = true;
                     }
+                    this.OnCheck();
                 }
+            }
+        }
+
+        #endregion
+
+        #region EVENT
+
+        /// <summary>
+        /// Event fired when the check state change
+        /// </summary>
+        protected void OnCheck()
+        {
+            if (this.OnCheckChange != null)
+            {
+                this.OnCheckChange(this, new MonoGameCheckBoxEventArgs(this.Checked));
             }
         }
 

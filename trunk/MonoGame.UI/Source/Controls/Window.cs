@@ -21,8 +21,25 @@ namespace MonoGame.UI
     {
         #region FIELDS
 
-        public List<Control> lstControl;
+        /// <summary>
+        /// Controls list
+        /// </summary>
+        public List<Control> lstControl { get; set; }
+
+        /// <summary>
+        /// The GuiEngine object
+        /// </summary>
         public GuiEngine Engine;
+
+        /// <summary>
+        /// Get or set if the Window close button is visible or not
+        /// </summary>
+        public Boolean ShowCloseButton { get; set; }
+
+        /// <summary>
+        /// On close Event
+        /// </summary>
+        public event MonoGameEventHandler OnClose;
 
         #endregion
 
@@ -39,6 +56,7 @@ namespace MonoGame.UI
             this.Text = "MonoGame.UI Window";
             this.Visible = true;
             this.Enabled = true;
+            this.ShowCloseButton = true;
             // Set position ans size
             this.SetPosition(10, 10);
             this.SetSize(300, 300);
@@ -52,6 +70,7 @@ namespace MonoGame.UI
             this.Text = "MonoGame.UI Window";
             this.Visible = true;
             this.Enabled = true;
+            this.ShowCloseButton = true;
             // Set position ans size
             this.SetPosition(left, top);
             this.SetSize(width, height);
@@ -65,6 +84,7 @@ namespace MonoGame.UI
             this.Text = title;
             this.Visible = true;
             this.Enabled = true;
+            this.ShowCloseButton = true;
             // Set position ans size
             this.SetPosition(left, top);
             this.SetSize(width, height);
@@ -98,6 +118,13 @@ namespace MonoGame.UI
                     {
                         this.MouseClick();
                     }
+                    if (MouseHelper.IsMouseInRectangle(Mouse.GetState(), 
+                        new Rectangle(this.Rectangle.Right - (this.Engine.Loader.WndButtonExit.Width / 2), this.Rectangle.Top + 9, 
+                            this.Engine.Loader.WndButtonExit.Width / 4, this.Engine.Loader.WndButtonExit.Height)) == true && this.ShowCloseButton == true &&
+                        MouseHelper.IsMouseClick(Mouse.GetState(), MouseHelper.MouseButtons.Left) == true)
+                    {
+                        this.OnCloseWindow();
+                    }
                     if (MouseHelper.firstMouseDown == true)
                     {
                         if (MouseHelper.IsMouseInRectangle(Mouse.GetState(), this.Engine.CurrentWindow.Rectangle) == false)
@@ -111,12 +138,15 @@ namespace MonoGame.UI
                         }
                     }
                 }
-                foreach (Control _control in this.lstControl)
+                if (this.lstControl != null)
                 {
-                    _control.Update();
-                    if (this.Disposed == true)
+                    foreach (Control _control in this.lstControl)
                     {
-                        return;
+                        _control.Update();
+                        if (this.Disposed == true)
+                        {
+                            return;
+                        }
                     }
                 }
             }
@@ -153,7 +183,14 @@ namespace MonoGame.UI
                 spriteBatch.Draw(this.Engine.Loader.WndTiles[9], new Rectangle(Rectangle.X, Rectangle.Bottom - 16, 16, 16), _winColor);
                 spriteBatch.Draw(this.Engine.Loader.WndTiles[10], new Rectangle(Rectangle.X + 16, Rectangle.Bottom - 16, Rectangle.Width - 32, 16), _winColor);
                 spriteBatch.Draw(this.Engine.Loader.WndTiles[11], new Rectangle(Rectangle.Right - 16, Rectangle.Bottom - 16, 16, 16), _winColor);
-                
+
+                if (this.ShowCloseButton == true)
+                {
+                    Texture2D _closeButton = this.Engine.Loader.WndButtonExit;
+                    Rectangle _sourceRectangle = new Rectangle(_closeButton.Width / 4, 0, _closeButton.Width / 4, _closeButton.Height);
+                    spriteBatch.Draw(_closeButton, new Vector2(this.Rectangle.Right - (_closeButton.Width / 2), this.Rectangle.Top + 9), _sourceRectangle, _winColor);
+                }
+
                 if (this.Text != null)
                 {
                     spriteBatch.DrawString(this.Engine.Font, this.Text,
@@ -215,6 +252,25 @@ namespace MonoGame.UI
             this.lstControl.Clear();
             this.lstControl = null;
             base.Dispose();
+        }
+
+        #endregion
+
+        #region WINDOW EVENTS
+
+        /// <summary>
+        /// Event fired when the window close
+        /// </summary>
+        public void OnCloseWindow()
+        {
+            if (this.OnClose != null)
+            {
+                this.OnClose(this, null);
+            }
+            else
+            {
+                this.Engine.RemoveWindow(this, true);
+            }
         }
 
         #endregion

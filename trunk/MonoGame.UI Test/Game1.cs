@@ -50,9 +50,11 @@ namespace MonoGame.UI_Test
 
             this.win = new Window(this.Engine);
             this.button1 = new UI.Button(this.win, 30, 200, 200, 24, "Leave Program");
+            this.button1.Enabled = false;
             this.button1.OnMouseClick += button1_OnMouseClick;
             this.label1 = new UI.Label(this.win, 55, 10, "Welcome to MonoGame.UI");
-            this.checkBox1 = new UI.CheckBox(this.win, 20, 75, "Please check this", true);
+            this.checkBox1 = new UI.CheckBox(this.win, 20, 75, "Active button", true);
+            this.checkBox1.OnCheckChange += checkBox1_OnCheckChange;
 
             this.win2 = new Window(this.Engine, 350, 10, 300, 300, "Hello world!");
             this.label2 = new UI.Label(this.win2, 55, 10, "Nice label on an other Window.");
@@ -62,6 +64,19 @@ namespace MonoGame.UI_Test
 
             base.Initialize();
         }
+
+        void checkBox1_OnCheckChange(object sender, MonoGameCheckBoxEventArgs e)
+        {
+            if (e.State == true)
+            {
+                this.button1.Enabled = true;
+            }
+            else
+            {
+                this.button1.Enabled = false;
+            }
+        }
+
 
         void button1_OnMouseClick(object sender, MonoGameMouseEventArgs e)
         {

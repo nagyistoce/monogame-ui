@@ -23,6 +23,7 @@ namespace MonoGame.UI
 
         public SpriteFont Font;
         public Texture2D[] WndTiles;
+        public Texture2D WndButtonExit;
         public Texture2D Buttons;
         public Texture2D CheckBox;
 
@@ -58,6 +59,9 @@ namespace MonoGame.UI
                 this.WndTiles[i] = this.Content.Load<Texture2D>(@"Theme/WndTile" + i.ToString());
             }
 
+            /* Load window close button */
+            this.WndButtonExit = this.Content.Load<Texture2D>(@"Theme/WndButtonExit");
+
             /* Load Button */
             this.Buttons = this.Content.Load<Texture2D>(@"Theme/WndButton");
 
@@ -75,6 +79,7 @@ namespace MonoGame.UI
             {
                 _texture.Dispose();
             }
+            this.WndButtonExit.Dispose();
             this.Buttons.Dispose();
             this.CheckBox.Dispose();
         }
