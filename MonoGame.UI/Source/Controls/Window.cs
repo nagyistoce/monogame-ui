@@ -17,6 +17,9 @@ using System.Text;
 
 namespace MonoGame.UI
 {
+    /// <summary>
+    /// MonoGame.UI Window control
+    /// </summary>
     public class Window : Control
     {
         #region FIELDS
