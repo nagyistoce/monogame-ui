@@ -375,6 +375,17 @@ namespace MonoGame.UI
         }
 
         /// <summary>
+        /// Function firing the MouseClick event by an other object
+        /// </summary>
+        public virtual void MouseClick(Object sender)
+        {
+            if (this.OnMouseClick != null)
+            {
+                this.OnMouseClick(sender, new MonoGameMouseEventArgs(Mouse.GetState()));
+            }
+        }
+
+        /// <summary>
         /// Function firing the MouseDoubleClick event
         /// </summary>
         public virtual void MouseDoubleClick() 
@@ -393,6 +404,17 @@ namespace MonoGame.UI
             if (this.OnMouseHover != null)
             {
                 this.OnMouseHover(this, new MonoGameMouseEventArgs(Mouse.GetState()));
+            }
+        }
+
+        /// <summary>
+        /// Function firing the MouseHover event by an other object
+        /// </summary>
+        public virtual void MouseHover(Object sender)
+        {
+            if (this.OnMouseHover != null)
+            {
+                this.OnMouseHover(sender, new MonoGameMouseEventArgs(Mouse.GetState()));
             }
         }
 

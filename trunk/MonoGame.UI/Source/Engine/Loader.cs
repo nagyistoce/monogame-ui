@@ -26,6 +26,7 @@ namespace MonoGame.UI
         public Texture2D WndButtonExit;
         public Texture2D Buttons;
         public Texture2D CheckBox;
+        public Texture2D RadioButton;
 
         #endregion
 
@@ -67,6 +68,9 @@ namespace MonoGame.UI
 
             /* Load CheckBox */
             this.CheckBox = this.Content.Load<Texture2D>(@"Theme/WndCheckBox");
+
+            /* Load RadioButton */
+            this.RadioButton = this.Content.Load<Texture2D>(@"Theme/ButtRadio");
         }
 
         /// <summary>

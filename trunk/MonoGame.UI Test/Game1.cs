@@ -24,10 +24,14 @@ namespace MonoGame.UI_Test
         GuiEngine Engine;
         Window win;
         Window win2;
+        Window win3;
 
         MonoGame.UI.Button button1;
         MonoGame.UI.Label label1;
         MonoGame.UI.CheckBox checkBox1;
+
+        MonoGame.UI.RadioGroup radioGroup1;
+        MonoGame.UI.RadioGroup radioGroup2;
 
         MonoGame.UI.Label label2;
 
@@ -48,19 +52,55 @@ namespace MonoGame.UI_Test
         {
             this.Engine = new GuiEngine(this.Content, this.GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
+            /* Window 1 */
             this.win = new Window(this.Engine);
+
+            /* Button */
             this.button1 = new UI.Button(this.win, 30, 200, 200, 24, "Leave Program");
             this.button1.Enabled = false;
             this.button1.OnMouseClick += button1_OnMouseClick;
+
+            /* Label */
             this.label1 = new UI.Label(this.win, 55, 10, "Welcome to MonoGame.UI");
-            this.checkBox1 = new UI.CheckBox(this.win, 20, 75, "Active button", true);
+
+            /* CheckBox */
+            this.checkBox1 = new UI.CheckBox(this.win, 20, 75, "Active leave button", true);
             this.checkBox1.OnCheckChange += checkBox1_OnCheckChange;
 
-            this.win2 = new Window(this.Engine, 350, 10, 300, 300, "Hello world!");
-            this.label2 = new UI.Label(this.win2, 55, 10, "Nice label on an other Window.");
+            /* Window 2 */
+            this.win2 = new Window(this.Engine, 350, 10, 250, 150, "Gui Stats");
+            this.win2.ShowCloseButton = false;
+            this.label2 = new UI.Label(this.win2, 25, 10, "GuiEngine Stats :");
+
+            this.win3 = new Window(this.Engine, 350, 200, 300, 225, "RadioButton tests");
+
+            /* RadioButton 1 */
+            this.radioGroup1 = new RadioGroup(this.win3);
+            this.radioGroup1.Placement = RadioButtonPlacement.Horizontal;
+            this.radioGroup1.SetPosition(20, 20);
+            UI.RadioButton _r1 = new UI.RadioButton(this.radioGroup1);
+            _r1.Text = "Power --";
+            UI.RadioButton _r2 = new UI.RadioButton(this.radioGroup1);
+            _r2.Text = "Power ++";
+            this.radioGroup1.AddRadioButton(_r1);
+            this.radioGroup1.AddRadioButton(_r2);
+
+            /* RadioButton 2 */
+            this.radioGroup2 = new RadioGroup(this.win3);
+            this.radioGroup2.SetPosition(20, 50);
+
+            UI.RadioButton _r3 = new UI.RadioButton(this.radioGroup2);
+            _r3.Text = "XNA";
+            UI.RadioButton _r4 = new UI.RadioButton(this.radioGroup2);
+            _r4.Text = "MonoGame";
+
+
+            this.radioGroup2.AddRadioButton(_r3);
+            this.radioGroup2.AddRadioButton(_r4);
 
             this.Engine.AddWindow(this.win);
             this.Engine.AddWindow(this.win2);
+            this.Engine.AddWindow(this.win3);
 
             base.Initialize();
         }

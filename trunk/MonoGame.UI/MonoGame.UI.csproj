@@ -49,6 +49,7 @@
     <Compile Include="Source\Controls\CheckBox.cs" />
     <Compile Include="Source\Controls\Control.cs" />
     <Compile Include="Source\Controls\Label.cs" />
+    <Compile Include="Source\Controls\RadioGroup.cs" />
     <Compile Include="Source\Controls\Window.cs" />
     <Compile Include="Source\Engine\GuiEngine.cs" />
     <Compile Include="Source\Engine\Loader.cs" />
